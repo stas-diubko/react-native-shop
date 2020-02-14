@@ -2,7 +2,8 @@ import { HomeState } from "./types";
 import { RootState} from '../root.reducer'
 
 export const initialState: HomeState = {
-    books: []
+    books: [],
+    check: 0
 }
 
 export function homeReducer(state: HomeState = initialState, action: any) {
@@ -10,9 +11,12 @@ export function homeReducer(state: HomeState = initialState, action: any) {
         case 'GET_BOOKS': {
             return {
                 ...state,
-                books: action.payload.books
+                books: action.data
             }
+
         }
+        default:
+            return state;
     }
 }
 

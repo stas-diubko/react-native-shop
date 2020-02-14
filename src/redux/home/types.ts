@@ -3,5 +3,6 @@ export enum HomeActions {
 }
 
 export interface HomeState {
-    books: []
+    books: [],
+    check: number,
 }
