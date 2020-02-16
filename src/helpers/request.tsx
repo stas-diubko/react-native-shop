@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const agent = axios.create({
-  baseURL: 'http://10.10.3.97:3001',
+  baseURL: 'http://192.168.1.101:3000',//10.10.3.97:3001
   headers: {
     'Content-Type': 'application/json'
   }

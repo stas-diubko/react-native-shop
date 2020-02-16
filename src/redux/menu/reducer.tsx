@@ -8,13 +8,10 @@ export const initialState: MenuState = {
 export function menuReducer(state: MenuState = initialState, action: any) {
     switch (action.type) {
         case 'ON_CLICK': {
-            console.log('menuReducer',action.data);
-            
             return {
                 ...state,
                 quantity: action.data
             }
-
         }
         default:
             return state;

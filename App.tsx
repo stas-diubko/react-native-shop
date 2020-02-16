@@ -10,8 +10,7 @@ import Basket from './src/components/basket/basket';
 import Profile from './src/components/profile/profile';
 import configureStore from "./src/redux/store";
 import {RootState} from './src/redux/root.reducer'
-import { Menu } from './src/components/menu/menu';
-import Loader from './src/common/loader/loaderComponent';
+import Menu from './src/components/menu/menu';
 
 const store: Store<RootState> = configureStore();
 export default class App extends React.Component {
@@ -20,8 +19,7 @@ export default class App extends React.Component {
       <Provider store={store}>
 
         <NativeRouter>
-          <Menu/>
-          <Loader/>
+          <Menu />
           <Route exact path="/" component={Home} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/sign-in" component={SignIn} />

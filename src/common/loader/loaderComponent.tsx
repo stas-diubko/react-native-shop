@@ -1,12 +1,7 @@
 import React from 'react';
 import autoBind from 'react-autobind';
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import { RootState } from '../../redux/root.reducer';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { connect } from "react-redux";
-
-export interface LoaderProps {
-    isActiveLoader: boolean;
-}
 
 export class Loader extends React.Component<any, any> {
     constructor(props) {
@@ -19,18 +14,22 @@ export class Loader extends React.Component<any, any> {
     }
 
     render() {
-        const {isActiveLoader} = this.props;
-        console.log('LoaderComponent ********** ',this.props.isActiveLoader);
-        
         return (
-            <ActivityIndicator style={isActiveLoader ? null : styles.loaderNotActive} size="small" color="#00ff00" />
+            <View style={styles.loaderContainer}>
+                <ActivityIndicator style={this.props.isActiveLoader ? null : styles.loaderNotActive} size="small" color="#fff" /> 
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    loaderContainer: {
+        position: 'absolute',
+        marginTop: 25,
+        marginLeft: 175
+    },
     loaderNotActive: {
-        display: 'none'
+        display: 'none',
     }
 });
 

@@ -1,13 +1,21 @@
 import React from 'react';
+import { connect } from "react-redux";
+import autoBind from 'react-autobind';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default class Profile extends React.Component {
-
+export class Profile extends React.Component<any, any> {
+    constructor(props) {
+        super(props);
+        this.state = {
+          
+        };
+        autoBind(this);
+    }
     render() {
 
         return (
             <View style={styles.profileContainer}>
-                <Text>Hello from Profile component!</Text>
+                <Text>Hello from Profile component! {this.props.menuNumber}</Text>
             </View>
         )
     }
@@ -20,3 +28,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#eeeeee',
     },
 });
+
+const mapStateToProps = (state) => {
+    return {
+        menuNumber: state.menu.quantity
+    }
+
+};
+
+export default connect(mapStateToProps)(Profile);

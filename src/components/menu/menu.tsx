@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button, ActivityIndicator, FlatList, Image } fr
 import { NativeRouter, Route, Link } from "react-router-native";
 import { connect } from "react-redux";
 import { getBooksAsync } from '../../redux/home/actions';
+import Loader from '../../common/loader/loaderComponent';
 
 export class Menu extends React.Component<any, any> {
     constructor(props) {
@@ -15,7 +16,6 @@ export class Menu extends React.Component<any, any> {
     }
 
     render() {
-      const {quantity} = this.props
       
         return (
             <View style={styles.container}>
@@ -37,7 +37,7 @@ export class Menu extends React.Component<any, any> {
             >
               <Text style={styles.menuItems}>Profile</Text>
             </Link>
-            <Text>quantity: {this.props.quantity}</Text>
+            <Loader/>
           </View>
         )
     }
@@ -45,6 +45,7 @@ export class Menu extends React.Component<any, any> {
 
 const styles = StyleSheet.create({
     container: {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'row',
       backgroundColor: 'lightgrey',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    quantity: state.menu.quantity
+    
   }
 }
 

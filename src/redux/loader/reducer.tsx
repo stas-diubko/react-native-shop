@@ -9,9 +9,8 @@ export function loaderReducer(state: LoaderState = initialState, action: any) {
     switch (action.type) {
         case 'ON_LOADER': {
             return {
-                isActive: action.data,
                 ...state,
-                
+                isActiveLoader: action.data
             }
         }
         default:
