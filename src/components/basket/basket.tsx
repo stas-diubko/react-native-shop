@@ -21,7 +21,7 @@ export class Basket extends React.Component<any,any> {
         let dataBasketParsed = JSON.parse(dataBasket);
         this.setState({
             basket: dataBasketParsed,
-            numberOfProducts: dataBasketParsed.length
+            numberOfProducts: 0 // dataBasketParsed.length
         }, () => {
         this.props.onLoader(false);
         })

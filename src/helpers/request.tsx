@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const agent = axios.create({
-  baseURL: 'http://192.168.1.101:3000',//10.10.3.97:3001
+  baseURL: 'https://775835db.ngrok.io/',// 192.168.1.101:3000  10.10.3.28:3000  https://775835db.ngrok.io/ https://jsonplaceholder.typicode.com/
   headers: {
     'Content-Type': 'application/json'
   }
 });
-
-let unauthorised = null;
 
 const send = ( method: any, url:string, data?:object, params?:string, token?:string, responseType?:any ): any => {
   const headers = token ? {

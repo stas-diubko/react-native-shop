@@ -20,9 +20,9 @@ export default class App extends React.Component {
 
         <NativeRouter>
           <Menu />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={SignIn} />
           <Route path="/sign-up" component={SignUp} />
-          <Route path="/sign-in" component={SignIn} />
+          <Route path="/home" component={Home} />
           <Route path="/basket" component={Basket} />
           <Route path="/profile" component={Profile} />
         </NativeRouter>

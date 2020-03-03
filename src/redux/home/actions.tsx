@@ -1,5 +1,7 @@
 import { HomeActions } from './types';
 import send from '../../helpers/request';
+import axios from 'axios';
+
 
 export function getBooksToHome(data) {
     return { type: HomeActions.GET_BOOKS, data };

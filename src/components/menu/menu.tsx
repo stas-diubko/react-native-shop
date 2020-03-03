@@ -20,7 +20,7 @@ export class Menu extends React.Component<any, any> {
         return (
             <View style={styles.container}>
             <Link
-              to="/"
+              to="/home"
               underlayColor="#f0f4f7"
             >
               <Text style={styles.menuItems}>Home</Text>
@@ -36,6 +36,12 @@ export class Menu extends React.Component<any, any> {
               underlayColor="#f0f4f7"
             >
               <Text style={styles.menuItems}>Profile</Text>
+            </Link>
+            <Link
+              to="/"
+              underlayColor="#f0f4f7"
+            >
+              <Text style={styles.menuItems}>Login</Text>
             </Link>
             <Loader/>
           </View>
