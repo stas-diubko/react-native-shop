@@ -3,11 +3,12 @@ import autoBind from 'react-autobind';
 import { StyleSheet, Text, View, Button, FlatList, Image, AsyncStorage } from 'react-native';
 import { connect } from "react-redux";
 import { getBooksAsync } from '../../redux/home/actions'
-import { RootState } from '../../redux/root.reducer';
 import { onLoader } from '../../redux/loader/actions';
 import { onClickMenu } from '../../redux/menu/actions';
 import { addProductToBasket } from '../../redux/basket/actions';
-
+import { getStorageItem, setStorageItem } from '../../helpers/asyncStorageHelper';
+import { getToken } from '../../helpers/authHelper';
+import Loader from '../../common/loader/loaderComponent';
 export class Home extends React.Component<any, any> {
     constructor(props) {
         super(props);
@@ -23,35 +24,37 @@ export class Home extends React.Component<any, any> {
 
     getBooksToHome() {
         this.props.onLoader(true);
-        setTimeout(() => {
-                this.props.sendRequest();
-                this.props.onLoader(false);
-            }, 1500   
-        )
+        this.props.sendRequest();
     }
 
     addProductToBasket = async (id) => {
         let basketArray = [];
+        let parsedToken = await getToken();
+
         let book = this.props.books.find(item => {
             return item._id == id;
         })
-        let dataBasket = await AsyncStorage.getItem('Basket');
-        if (dataBasket) {
-            let dataBasketParsed = JSON.parse(dataBasket);
+
+        let dataBasketParsed = await getStorageItem(`Basket-${parsedToken.id}`);
+
+        if (dataBasketParsed) {
+            let index = dataBasketParsed.findIndex((item) => item._id == id)
             let addingBook = dataBasketParsed.find(item => {
                 return item._id == id;
             });
             if (addingBook) {
-                return;
+                addingBook.amount += 1
+                dataBasketParsed[index] = addingBook;
+                return await setStorageItem(`Basket-${parsedToken.id}`, dataBasketParsed);
             } else {
+                book.amount = 1;
                 dataBasketParsed.push(book);
-                let dataBasketString = JSON.stringify(dataBasketParsed);
-                return await AsyncStorage.setItem('Basket', dataBasketString);
+                return await setStorageItem(`Basket-${parsedToken.id}`, dataBasketParsed);
             }
         }
+        book.amount = 1;
         basketArray.push(book);
-        let basketArrayString = JSON.stringify(basketArray);
-        return await AsyncStorage.setItem('Basket', basketArrayString);
+        return await setStorageItem(`Basket-${parsedToken.id}`, basketArray);
     }
 
     Item (title:string, author:string, price:string,  bookImage:string, description:string, id:string) {
@@ -80,11 +83,20 @@ export class Home extends React.Component<any, any> {
           </View>
         );
     }
+
+    removeStotageItemsAll = async () => {
+        const keys = await AsyncStorage.getAllKeys();
+        await AsyncStorage.multiRemove(keys)
+        // console.log(keys);
+        
+    }
     
     render() {
+        // this.removeStotageItemsAll()
         const {books} = this.props;
         return (
             <View style={styles.homeContainer}>
+                <Loader/>
                 <FlatList
                     data={books || []}
                     extraData={this.props}
@@ -102,6 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     homeContainer: {
+        position: 'relative',
         flex: 1,
         display: 'flex',
         backgroundColor: '#eeeeee',

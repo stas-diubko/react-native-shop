@@ -12,7 +12,6 @@ export function basketReducer(state: BasketState = initialState, action: any) {
                 ...state,
                 numberBooks: action.data
             }
-
         }
         default:
             return state;

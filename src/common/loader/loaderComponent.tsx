@@ -16,7 +16,7 @@ export class Loader extends React.Component<any, any> {
     render() {
         return (
             <View style={styles.loaderContainer}>
-                <ActivityIndicator style={this.props.isActiveLoader ? null : styles.loaderNotActive} size="small" color="#fff" /> 
+                <ActivityIndicator style={this.props.isActiveLoader ? null : styles.loaderNotActive} size="small" color="#000" /> 
             </View>
         )
     }
@@ -25,8 +25,9 @@ export class Loader extends React.Component<any, any> {
 const styles = StyleSheet.create({
     loaderContainer: {
         position: 'absolute',
-        marginTop: 25,
-        marginLeft: 175
+        right: 15,
+        top: 10,
+        zIndex: 1
     },
     loaderNotActive: {
         display: 'none',

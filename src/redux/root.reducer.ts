@@ -7,19 +7,23 @@ import { MenuState } from "./menu/types";
 import { menuReducer } from "./menu/reducer";
 import { BasketState } from "./basket/types";
 import { basketReducer } from "./basket/reducer";
+import { authReducer } from "./auth/reducer";
+import { LoginState } from "./auth/types";
 
 export interface RootState {
     home: HomeState;
     loader: LoaderState;
     menu: MenuState;
-    basket: BasketState
+    basket: BasketState;
+    auth: LoginState
 }
 
 const rootReducer: Reducer<RootState> = combineReducers<RootState>({
     home: homeReducer,
     loader: loaderReducer,
     menu: menuReducer,
-    basket: basketReducer
+    basket: basketReducer,
+    auth: authReducer
 })
 
 // const rootReducer = ( state, action ) => {

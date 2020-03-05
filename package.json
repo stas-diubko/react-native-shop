@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "expo": "~36.0.0",
     "expokit": "^36.0.1",
+    "jwt-decode": "^2.2.0",
     "native-base": "^2.13.8",
     "react": "~16.9.0",
     "react-autobind": "^1.0.6",
