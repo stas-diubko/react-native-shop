@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route } from "react-router-native";
 import { Provider } from 'react-redux';
 import { Store } from "redux";
 import AuthenticatedRoute from './src/common/authenticatedRoute';

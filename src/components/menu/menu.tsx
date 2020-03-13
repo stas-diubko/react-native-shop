@@ -1,7 +1,7 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 import { StyleSheet, Text, View, } from 'react-native';
-import { Link } from "react-router-native";
+import { Link, withRouter } from "react-router-native";
 import { connect } from "react-redux";
 import { Icon } from 'native-base';
 
@@ -20,8 +20,13 @@ export class Menu extends React.Component<any, any> {
         autoBind(this);
     }
 
+    componentWillMount() {
+      this.getIsLogin();
+    }
+
     onLogout = async () => {
       await removeStorageItem('token');
+      this.getIsLogin();
       return this.props.onLogout();
     }
 
@@ -39,16 +44,16 @@ export class Menu extends React.Component<any, any> {
       }
     }
 
-    // getIsLogin = async () => {
-    //   let isLogin = await makeIsLoggedIn();
-    //   this.setState({
-    //     isAuth: isLogin
-    //   })
-    // }
+    getIsLogin = async () => {
+      let isLogin = await makeIsLoggedIn();
+      this.setState({
+        isAuth: isLogin
+      })
+    }
 
     render() {
-      this.getBasketLength()
-      // this.getIsLogin()
+      this.getBasketLength();
+      this.getIsLogin();
         return (
             <View style={styles.container}>
               <View style={styles.wrapItems}>
@@ -56,19 +61,19 @@ export class Menu extends React.Component<any, any> {
                   to="/"
                   underlayColor="#f0f4f7"
                 >
-                  <Text style={styles.menuItems}><Icon name='home'/></Text>
+                  <Text style={styles.menuItems}><Icon name='home' style={this.props.location.pathname == '/' ? styles.activeScreen : styles.notActiveScreen}/></Text>
                 </Link>
                 <Link
                   to="/profile"
                   underlayColor="#f0f4f7"
                 >
-                  <Text style={this.props.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='person'/></Text>
+                  <Text style={this.state.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='person' style={this.props.location.pathname == '/profile' ? styles.activeScreen : styles.notActiveScreen}/></Text>
                 </Link>
                 <Link
                   to="/basket"
                   underlayColor="#f0f4f7"
                 >
-                  <Text style={this.props.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='cart' style={this.state.basketLength > 0 ? styles.iconStyleActive : null}/></Text>
+                  <Text style={this.state.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='cart' style={this.props.location.pathname == '/basket' ? styles.activeScreen : this.state.basketLength > 0 ? styles.iconStyleActive : styles.notActiveScreen}/></Text>
                 </Link>
               </View>
               
@@ -77,9 +82,9 @@ export class Menu extends React.Component<any, any> {
                   to="/sign-in"
                   underlayColor="#f0f4f7"
                 >
-                  <Text style={!this.props.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='log-in'/></Text>
+                  <Text style={!this.state.isAuth ? styles.menuItems : styles.notDisplay}><Icon name='log-in'/></Text>
                 </Link>
-                <Text style={this.props.isAuth ? styles.menuItems : styles.notDisplay} onPress={this.onLogout}><Icon name='log-out'/></Text>
+                <Text style={this.state.isAuth ? styles.menuItems : styles.notDisplay} onPress={this.onLogout}><Icon name='log-out'/></Text>
               </View>
           </View>
         )
@@ -111,7 +116,13 @@ const styles = StyleSheet.create({
       display: 'none'
     },
     iconStyleActive: {
-      color: 'red'
+      color: 'brown'
+    },
+    activeScreen: {
+      color: '#000'
+    },
+    notActiveScreen: {
+      color: 'darkgrey',
     }
 });
 
@@ -128,4 +139,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));
