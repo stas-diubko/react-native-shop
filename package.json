@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/node": "^13.7.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo": "~36.0.0",
     "expokit": "^36.0.1",
     "jwt-decode": "^2.2.0",
